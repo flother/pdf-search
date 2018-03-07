@@ -1,0 +1,21 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+elasticsearch-dsl = ">=5.0.0,<6.0.0"
+certifi = "*"
+
+
+[requires]
+
+python_version = "3.6"
+
+
+[dev-packages]
+
+"e1839a8" = {path = ".", editable = true}

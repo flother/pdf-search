@@ -17,7 +17,7 @@ index = Index('pdf-search-example', using=client)
 @index.doc_type
 class Document(DocType):
 
-    doc_file = Attachment()
+    source_file = Attachment()
 
 
 def create_index():
@@ -26,7 +26,7 @@ def create_index():
         'description': "Extract attachment information",
         'processors': [{
             "attachment": {
-                "field": "doc_file"
+                "field": "source_file"
             }
         }]
     })
@@ -44,7 +44,7 @@ def save_docs():
         print(concept)
         doc = Document()
         with concept.open('rb') as f:
-            doc.doc_file = base64.b64encode(f.read()).decode('ascii')
+            doc.source_file = base64.b64encode(f.read()).decode('ascii')
         doc.save(using=client, pipeline='document_attachment')
 
 
@@ -56,7 +56,7 @@ def search():
     s = Document.search(using=client)
     query = MultiMatch(query=search_term, fields=['attachment.content'])
     s = s.query(query)
-    s = s.source(include=['attachment.*'], exclude=['doc_file'])
+    s = s.source(include=['attachment.*'], exclude=['source_file'])
     s = s.highlight('attachment.content')
     results = s.execute()
     for hit in results:

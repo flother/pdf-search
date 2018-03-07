@@ -1,4 +1,5 @@
 import base64
+import os
 import pathlib
 import sys
 
@@ -8,8 +9,8 @@ from elasticsearch_dsl import Index, DocType, Attachment, Text
 from elasticsearch_dsl.query import MultiMatch
 
 
-ES_URL = ''  # e.g. https://something.somewhere.es.amazonaws.com
-client = Elasticsearch([ES_URL])
+ELASTICSEARCH_ENDPOINT = os.environ['ELASTICSEARCH_ENDPOINT']
+client = Elasticsearch(hosts=[ELASTICSEARCH_ENDPOINT])
 index = Index('pdf-search-example', using=client)
 
 
